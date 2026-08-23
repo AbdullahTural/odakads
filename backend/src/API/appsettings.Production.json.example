@@ -1,0 +1,34 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=YOUR_SQL_SERVER;Database=HasanHabibSeydaDb;User Id=YOUR_USER;Password=YOUR_PASSWORD;Encrypt=True;TrustServerCertificate=False;MultipleActiveResultSets=true"
+  },
+  "Jwt": {
+    "Issuer": "HasanHabibSeyda.API",
+    "Audience": "HasanHabibSeyda.Client",
+    "Key": "GENERATE_A_UNIQUE_RANDOM_SECRET_AT_LEAST_64_CHARACTERS_LONG_DO_NOT_REUSE_DEV_KEY",
+    "AccessTokenMinutes": 30,
+    "RefreshTokenDays": 7
+  },
+  "Resend": {
+    "ApiKey": "re_YOUR_RESEND_API_KEY",
+    "From": "Odak Ads Reklam <info@odakadsreklam.com>",
+    "To": "info@odakadsreklam.com"
+  },
+  "Cors": {
+    "Origins": []
+  },
+  "Database": {
+    "AutoMigrate": true,
+    "SeedOnStartup": false
+  },
+  "AllowedHosts": "odakadsreklam.com;www.odakadsreklam.com",
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Warning",
+      "Override": {
+        "Microsoft.AspNetCore": "Warning",
+        "Microsoft.EntityFrameworkCore.Database.Command": "Warning"
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "home": {
+    "title": "Odak Ads Reklam",
+    "description": "İşletmeniz için uygun anahtar kelimelerle, reklamlarınızı doğru hedef kitlesine ulaştırıyoruz. Manuel kampanyalarla sürdürülebilir bir büyüme sağlıyoruz.",
+    "canonicalUrl": "/",
+    "keywords": "Google Ads uzmanı, Google Ads danışmanlığı, Google Ads yönetimi, manuel kampanya yönetimi, performans pazarlaması, şeffaf reklam yönetimi, Google reklam ajansı"
+  },
+  "about": {
+    "title": "Hakkımızda | Odak Ads Reklam",
+    "description": "Odak Ads Reklam; doğru hedef kitle analizi ve şeffaf kampanya yönetimiyle dijital reklam bütçenizi en verimli şekilde değerlendiren bir reklam platformudur.",
+    "canonicalUrl": "/hakkimizda",
+    "keywords": "Google Ads uzmanı, dijital reklam ajansı, profesyonel reklam yönetimi, şeffaf kampanya yönetimi, manuel reklam kurulumu, google partner"
+  },
+  "services": {
+    "title": "Hizmetler | Odak Ads Reklam",
+    "description": "Google Ads yönetimi, arama ağı, görüntülü, YouTube, Performance Max, yeniden pazarlama, dönüşüm takibi ve web site yapımı",
+    "canonicalUrl": "/hizmetler",
+    "keywords": "Google Ads yönetimi, arama ağı reklamları, yeniden pazarlama, dönüşüm takibi, görüntülü reklamlar, YouTube reklam yönetimi"
+  },
+  "success": {
+    "title": "Referanslar | Odak Ads Reklam",
+    "description": "Birlikte çalıştığımız işletmeler, müşteri yorumları ve şeffaf Google Ads süreçlerimizdeki iş ortaklıklarımızı inceleyin.",
+    "canonicalUrl": "/referanslar",
+    "keywords": "Google Ads referansları, müşteri yorumları, vaka çalışması, reklam yönetimi deneyimleri, şeffaf iş ortaklıkları"
+  },
+  "contact": {
+    "title": "İletişim | Odak Ads Reklam",
+    "description": "Ücretsiz Google Ads hesap analizi için bizimle iletişime geçebilirsiniz.\n 24 saat içinde dönüş yapıyoruz.",
+    "canonicalUrl": "/iletisim",
+    "keywords": "Google Ads iletişim, ücretsiz analiz, danışmanlık"
+  }
+}

@@ -1,0 +1,285 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Aydınlık tema (varsayılan CSS; next-themes dark class ile ezer) */
+  :root {
+    --background: 211 30% 96%; /* oklch(0.97 0.005 250) ≈ #f3f5f8 */
+    --foreground: 222 47% 14%; /* koyu lacivert */
+
+    --card: 0 0% 100%; /* beyaz */
+    --card-foreground: 222 47% 14%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 14%;
+
+    --primary: 226 71% 48%; /* indigo — açık zeminde kontrast */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 258 70% 52%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 214 28% 92%;
+    --muted-foreground: 215 20% 38%;
+
+    --accent: 226 71% 48%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214 24% 86%;
+    --input: 214 24% 90%;
+    --ring: 226 71% 48%;
+
+    --radius: 0.875rem;
+
+    /* Tema-agnostik yüzey tonları (border-white/10 yerine) */
+    --surface: 222 30% 12%;
+    --surface-opacity: 0.04;
+    --hairline: 222 30% 12%;
+    --hairline-opacity: 0.1;
+
+    --body-gradient: linear-gradient(180deg, #eef2f8 0%, #f3f5f8 45%, #e8eef6 100%);
+    --body-glow-1: rgba(59, 130, 246, 0.1);
+    --body-glow-2: rgba(139, 92, 246, 0.06);
+    --scrollbar-track: #e8eef6;
+
+    color-scheme: light;
+  }
+
+  /* Koyu tema — yumuşatılmış (oklch 0.16 / 0.20) + force-dark paneller */
+  .dark,
+  .force-dark {
+    --background: 212 73% 6%; /* oklch(0.16 0.03 250) ≈ #040e1a */
+    --foreground: 210 40% 98%;
+
+    --card: 210 52% 9%; /* oklch(0.20 0.03 250) ≈ #0b1723 */
+    --card-foreground: 210 40% 98%;
+
+    --popover: 210 52% 8%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 226 71% 56%; /* indigo — koyu zeminde okunur */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 258 90% 66%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 22% 72%;
+
+    --accent: 226 71% 56%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 33% 20%;
+    --input: 217 33% 18%;
+    --ring: 226 71% 56%;
+
+    --surface: 0 0% 100%;
+    --surface-opacity: 0.04;
+    --hairline: 0 0% 100%;
+    --hairline-opacity: 0.1;
+
+    --body-gradient: linear-gradient(180deg, #0a1224 0%, #040e1a 50%, #020810 100%);
+    --body-glow-1: rgba(59, 130, 246, 0.14);
+    --body-glow-2: rgba(139, 92, 246, 0.1);
+    --scrollbar-track: #040e1a;
+
+    color-scheme: dark;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(60% 50% at 50% 0%, var(--body-glow-1), transparent 70%),
+      radial-gradient(45% 40% at 100% 10%, var(--body-glow-2), transparent 70%),
+      var(--body-gradient);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.3);
+    color: hsl(var(--foreground));
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, hsl(var(--primary)), hsl(var(--secondary)));
+    border-radius: 9999px;
+    border: 2px solid var(--scrollbar-track);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #60a5fa, #a78bfa);
+  }
+}
+
+@layer components {
+  .glass {
+    @apply border border-border backdrop-blur-xl;
+    background-color: hsl(var(--surface) / var(--surface-opacity));
+  }
+
+  .glass-strong {
+    @apply border border-border backdrop-blur-2xl;
+    background-color: hsl(var(--card) / 0.85);
+  }
+
+  .force-dark .glass-strong {
+    background-color: hsl(var(--card) / 0.92);
+    border-color: hsl(0 0% 100% / 0.1);
+  }
+
+  .glow-blue {
+    box-shadow: 0 0 25px -2px rgba(59, 130, 246, 0.45);
+  }
+
+  .glow-purple {
+    box-shadow: 0 0 25px -2px rgba(139, 92, 246, 0.45);
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent;
+  }
+
+  .dark .text-gradient,
+  .force-dark .text-gradient {
+    @apply from-blue-400 via-indigo-400 to-purple-400;
+  }
+
+  .text-gradient-blue {
+    @apply bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent;
+  }
+
+  .dark .text-gradient-blue,
+  .force-dark .text-gradient-blue {
+    @apply from-sky-300 to-blue-500;
+  }
+
+  .section-pad {
+    @apply py-20 sm:py-24 lg:py-32;
+  }
+
+  .card-gradient {
+    background:
+      linear-gradient(180deg, hsl(var(--surface) / 0.06) 0%, hsl(var(--surface) / 0.01) 100%),
+      hsl(var(--card));
+  }
+
+  .glow-border {
+    position: relative;
+  }
+  .glow-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.6), rgba(139, 92, 246, 0.6), transparent 60%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+  .glow-border:hover::before {
+    opacity: 1;
+  }
+
+  /* Logo chip — iki temada sabit nötr zemin (açık logolar için) */
+  .logo-chip {
+    @apply flex items-center justify-center rounded-xl border px-3;
+    background-color: #f1f5f9;
+    border-color: #e2e8f0;
+  }
+}
+
+/* Swiper */
+.swiper-pagination-bullet {
+  background: hsl(var(--muted-foreground) / 0.4);
+  opacity: 1;
+}
+.swiper-pagination-bullet-active {
+  background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--secondary)));
+  width: 22px;
+  border-radius: 9999px;
+}
+
+.logo-marquee:hover .logo-marquee-track {
+  animation-play-state: paused;
+}
+
+.logo-marquee-track {
+  animation: logo-marquee-scroll 45s linear infinite;
+}
+
+@keyframes logo-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-marquee-track {
+    animation: none;
+  }
+}
+
+@layer utilities {
+  .skeleton {
+    @apply relative overflow-hidden rounded-md bg-muted;
+  }
+  .skeleton::after {
+    content: "";
+    @apply absolute inset-0 -translate-x-full;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--foreground) / 0.06),
+      transparent
+    );
+    animation: shimmer 1.6s infinite;
+  }
+
+  /* Tema-agnostik yüzey yardımcıları */
+  .border-hairline {
+    border-color: hsl(var(--hairline) / var(--hairline-opacity));
+  }
+  .bg-surface {
+    background-color: hsl(var(--surface) / var(--surface-opacity));
+  }
+  .bg-surface-hover {
+    background-color: hsl(var(--surface) / calc(var(--surface-opacity) + 0.04));
+  }
+  .hover\:bg-surface:hover,
+  .hover\:bg-surface-hover:hover {
+    background-color: hsl(var(--surface) / calc(var(--surface-opacity) + 0.04));
+  }
+  .group-hover\:bg-surface:is(:where(.group):hover *) {
+    background-color: hsl(var(--surface) / calc(var(--surface-opacity) + 0.04));
+  }
+}

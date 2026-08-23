@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- wwwroot her publish'te Next export ile yenilenir; SDK asset manifest cache cakismasini onle -->
+    <StaticWebAssetsEnabled>false</StaticWebAssetsEnabled>
+    <!-- Repo koku: backend/src/API -> ../../../ -->
+    <RepositoryRoot>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)\..\..\..\'))</RepositoryRoot>
+  </PropertyGroup>
+
+  <!--
+    Frontend build: npm run publish:all (OneDrive/Turkce yolda MSBuild npm cagrisi bozulabilir).
+    Manuel: npm run build:deploy && dotnet publish ... -p:SkipFrontendBuild=true
+  -->
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.16" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Application\HasanHabibSeyda.Application.csproj" />
+    <ProjectReference Include="..\Infrastructure\HasanHabibSeyda.Infrastructure.csproj" />
+    <ProjectReference Include="..\Persistence\HasanHabibSeyda.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>
