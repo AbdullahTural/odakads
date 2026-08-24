@@ -199,4 +199,89 @@ public static class MappingExtensions
         MissionText = e.MissionText,
         VisionText = e.VisionText,
     };
+
+    // --- Blog ---
+
+    public static BlogListItemDto ToListItemDto(this BlogPost e) => new()
+    {
+        Id = e.Id,
+        Title = e.Title,
+        Slug = e.Slug,
+        Excerpt = e.Excerpt,
+        CoverImageUrl = e.CoverImageUrl,
+        CoverImageAlt = e.CoverImageAlt,
+        Category = e.Category,
+        Tags = e.Tags,
+        Author = e.Author,
+        ReadingMinutes = e.ReadingMinutes,
+        PublishedAt = Iso(e.PublishedAt),
+    };
+
+    public static BlogDetailDto ToDetailDto(this BlogPost e) => new()
+    {
+        Id = e.Id,
+        Title = e.Title,
+        Slug = e.Slug,
+        Excerpt = e.Excerpt,
+        CoverImageUrl = e.CoverImageUrl,
+        CoverImageAlt = e.CoverImageAlt,
+        Category = e.Category,
+        Tags = e.Tags,
+        Author = e.Author,
+        ReadingMinutes = e.ReadingMinutes,
+        PublishedAt = Iso(e.PublishedAt),
+        Content = e.Content,
+        UpdatedAt = Iso(e.UpdatedDate) ?? string.Empty,
+        SeoTitle = e.SeoTitle,
+        SeoDescription = e.SeoDescription,
+        CanonicalUrl = e.CanonicalUrl,
+        OgTitle = e.OgTitle,
+        OgDescription = e.OgDescription,
+        OgImageUrl = e.OgImageUrl,
+        NoIndex = e.NoIndex,
+    };
+
+    public static BlogAdminListItemDto ToAdminListItemDto(this BlogPost e) => new()
+    {
+        Id = e.Id,
+        Title = e.Title,
+        Slug = e.Slug,
+        Category = e.Category,
+        Author = e.Author,
+        Status = e.Status,
+        CoverImageUrl = e.CoverImageUrl,
+        PublishedAt = Iso(e.PublishedAt),
+        UpdatedDate = e.UpdatedDate,
+    };
+
+    public static BlogAdminDetailDto ToAdminDetailDto(this BlogPost e) => new()
+    {
+        Id = e.Id,
+        Title = e.Title,
+        Slug = e.Slug,
+        Excerpt = e.Excerpt,
+        Content = e.Content,
+        CoverImageUrl = e.CoverImageUrl,
+        CoverImageAlt = e.CoverImageAlt,
+        Category = e.Category,
+        Tags = e.Tags,
+        Author = e.Author,
+        ReadingMinutes = e.ReadingMinutes,
+        Status = e.Status,
+        PublishedAt = Iso(e.PublishedAt),
+        ArchivedAt = Iso(e.ArchivedAt),
+        CreatedDate = e.CreatedDate,
+        UpdatedDate = e.UpdatedDate,
+        SeoTitle = e.SeoTitle,
+        SeoDescription = e.SeoDescription,
+        CanonicalUrl = e.CanonicalUrl,
+        OgTitle = e.OgTitle,
+        OgDescription = e.OgDescription,
+        OgImageUrl = e.OgImageUrl,
+        NoIndex = e.NoIndex,
+        PreviousSlugs = e.PreviousSlugs,
+    };
+
+    /// <summary>DateTime? -> ISO 8601 (UTC, 'Z' sonekli). Depolanan degerler UtcNow.</summary>
+    private static string? Iso(DateTime? dt) => dt?.ToString("yyyy-MM-ddTHH:mm:ss'Z'");
 }

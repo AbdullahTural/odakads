@@ -30,5 +30,8 @@ public interface IAppDbContext
     DbSet<ConversionSetting> ConversionSettings { get; }
     DbSet<AboutSetting> AboutSettings { get; }
 
+    // Blog
+    DbSet<BlogPost> BlogPosts { get; }
+
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

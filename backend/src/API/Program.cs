@@ -5,6 +5,9 @@ using HasanHabibSeyda.API.Middleware;
 using HasanHabibSeyda.API.Services;
 using HasanHabibSeyda.Application;
 using HasanHabibSeyda.Application.Common.Interfaces;
+using HasanHabibSeyda.Application.Features.Blogs.Queries;
+using MediatR;
+using Microsoft.Extensions.FileProviders;
 using HasanHabibSeyda.Infrastructure;
 using HasanHabibSeyda.Infrastructure.Settings;
 using HasanHabibSeyda.Persistence;
@@ -33,6 +36,7 @@ builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 builder.Services.AddScoped<LogoUploadService>();
+builder.Services.AddScoped<MediaUploadService>();
 
 // --- Controllers (System.Text.Json varsayilan camelCase) ---
 builder.Services.AddControllers();
@@ -272,6 +276,18 @@ app.UseStaticFiles(new StaticFileOptions
     },
 });
 
+// --- Yuklenen medya (blog kapaklari vb.) — wwwroot DISINDA, kalici → /media/* ---
+// Static export wwwroot'a kopyalanirken (build:deploy) silinmez.
+var mediaRoot = MediaUploadService.ResolveMediaRoot(app.Environment, app.Configuration);
+Directory.CreateDirectory(mediaRoot);
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(mediaRoot),
+    RequestPath = "/media",
+    OnPrepareResponse = ctx =>
+        ctx.Context.Response.Headers.CacheControl = "public,max-age=2592000",
+});
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -302,6 +318,30 @@ app.MapFallback(async (HttpContext context, IWebHostEnvironment env) =>
             context.Response.ContentType = "text/html; charset=utf-8";
             await context.Response.SendFileAsync(physicalPath);
             return;
+        }
+
+        // Yayindayken slug'i degistirilmis bir blog yazisi icin 301 (PreviousSlugs → guncel slug).
+        // Best-effort: cozulemezse normal 404 akisina duser.
+        if (path.StartsWith("/blog/", StringComparison.OrdinalIgnoreCase))
+        {
+            try
+            {
+                var segments = path.Trim('/').Split('/', StringSplitOptions.RemoveEmptyEntries);
+                if (segments.Length == 2)
+                {
+                    var sender = context.RequestServices.GetRequiredService<ISender>();
+                    var currentSlug = await sender.Send(new ResolveBlogRedirectQuery(segments[1]));
+                    if (!string.IsNullOrEmpty(currentSlug))
+                    {
+                        context.Response.Redirect($"/blog/{currentSlug}/", permanent: true);
+                        return;
+                    }
+                }
+            }
+            catch
+            {
+                // yonlendirme cozulemedi — 404'e devam
+            }
         }
     }
 
