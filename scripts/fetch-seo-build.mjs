@@ -10,7 +10,7 @@ import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const PAGE_KEYS = ["home", "about", "services", "success", "contact"];
+const PAGE_KEYS = ["home", "about", "services", "success", "contact", "blog"];
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
 const outPath = join(repoRoot, "lib", "seo-build-overrides.json");
 

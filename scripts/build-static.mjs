@@ -29,6 +29,7 @@ function run(label, command, args) {
 }
 
 run("SEO fetch", "npm", ["run", "fetch:seo"]);
+run("Blog fetch", "npm", ["run", "fetch:blog"]);
 run("next build", "npx", ["next", "build"]);
 
 console.log("[build:static] Tamam.");

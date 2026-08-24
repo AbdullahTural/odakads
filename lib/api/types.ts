@@ -137,6 +137,35 @@ export interface SiteSettingsDto {
   linkedinUrl: string;
 }
 
+/** Blog liste ogesi — C#: BlogListItemDto (GET /api/blogs) */
+export interface BlogListItemDto {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  coverImageUrl: string;
+  coverImageAlt: string;
+  category: string;
+  tags: string[];
+  author: string;
+  readingMinutes: number;
+  publishedAt: string | null; // ISO 8601
+}
+
+/** Blog detay — C#: BlogDetailDto (GET /api/blogs/{slug}) */
+export interface BlogDetailDto extends BlogListItemDto {
+  /** Markdown govde. */
+  content: string;
+  updatedAt: string;
+  seoTitle: string;
+  seoDescription: string;
+  canonicalUrl: string;
+  ogTitle: string;
+  ogDescription: string;
+  ogImageUrl: string;
+  noIndex: boolean;
+}
+
 /** Sayfa SEO ayari — C#: SeoSettingDto (GET /api/seo-settings/{pageKey}) */
 export interface SeoSettingDto {
   id: string;
