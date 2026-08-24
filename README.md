@@ -117,7 +117,21 @@ oluşturulmalıdır.
 - `/hakkimizda` — Hikâye, Misyon/Vizyon, Değerler, İstatistikler
 - `/hizmetler` — 8 hizmet kartı, Süreç
 - `/basarilarimiz` — Armut yorumları (Swiper), Video referanslar, Vaka çalışmaları, Google Partner
+- `/blog` — Blog listesi · `/blog/yazi-slug` — Blog detay (SSG, build-time üretilir)
 - `/iletisim` — İletişim formu, bilgiler, harita
+
+## Bloglar (SSG + admin)
+
+Blog içeriği backend DB'de tutulur; ziyaretçi tarafı **static export ile build-time** üretilir
+(`generateStaticParams`), böylece içerik JS gerektirmeden server-rendered sunulur (SEO).
+
+- **Yayın akışı:** Admin panelde yazı oluştur/yayınla → yeni yazının canlıya çıkması için **rebuild** gerekir
+  (SEO akışıyla aynı): `npm run build:deploy`. Build öncesi `fetch:blog`, yayındaki yazıları API'den çekip
+  `lib/blog-build-data.json`'a yazar (API kapalıysa güvenli boş fallback).
+- **Yalnızca yayındakiler** listelenir/sitemap'e girer; taslak/arşiv üretilmez, `/admin/*` noindex.
+- **Görsel deposu:** Kapak görselleri `wwwroot` **dışında** kalıcı bir klasöre yüklenir ve `/media/*` ile
+  servis edilir (böylece `copy:wwwroot` yüklemeleri silmez). Konum: `appsettings → Media:RootPath`
+  (production'da deploy klasörü dışında, kalıcı bir mutlak yol önerilir; varsayılan `App_Data/uploads`).
 
 ## Yönetim Paneli (`/admin`)
 
