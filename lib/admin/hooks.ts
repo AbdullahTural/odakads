@@ -9,6 +9,10 @@ import { adminApi, toQuery } from "./api";
 import type {
   AboutSettingInput,
   AboutSettingItem,
+  BlogAdminDetail,
+  BlogAdminListItem,
+  BlogInput,
+  BlogSlugCheck,
   AnalyticsSettingInput,
   AnalyticsSettingItem,
   CaseStudyInput,
@@ -213,4 +217,71 @@ export function useDashboardSummary() {
     queryKey: ["admin-dashboard-summary"],
     queryFn: () => adminApi.get<DashboardSummary>("/api/admin/dashboard/summary"),
   });
+}
+
+// --- Blog ---
+
+export function useBlogList(params: QueryParams & { status?: string }) {
+  return useQuery({
+    queryKey: ["admin-blogs", "list", params],
+    queryFn: () =>
+      adminApi.get<PagedResult<BlogAdminListItem>>(`/api/admin/blogs${toQuery(params)}`),
+  });
+}
+
+export function useBlogPost(id: string | null) {
+  return useQuery({
+    queryKey: ["admin-blogs", "detail", id],
+    queryFn: () => adminApi.get<BlogAdminDetail>(`/api/admin/blogs/${id}`),
+    enabled: !!id,
+  });
+}
+
+export function useCreateBlog() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (input: BlogInput) => adminApi.post<BlogAdminDetail>("/api/admin/blogs", input),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["admin-blogs"] }),
+  });
+}
+
+export function useUpdateBlog() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, input }: { id: string; input: BlogInput }) =>
+      adminApi.put<BlogAdminDetail>(`/api/admin/blogs/${id}`, input),
+    onSuccess: (_data, vars) => {
+      qc.invalidateQueries({ queryKey: ["admin-blogs"] });
+      qc.invalidateQueries({ queryKey: ["admin-blogs", "detail", vars.id] });
+    },
+  });
+}
+
+export function useChangeBlogStatus() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, status }: { id: string; status: string }) =>
+      adminApi.post<BlogAdminDetail>(`/api/admin/blogs/${id}/status`, { status }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["admin-blogs"] }),
+  });
+}
+
+export function useDeleteBlog() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => adminApi.del<boolean>(`/api/admin/blogs/${id}`),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["admin-blogs"] }),
+  });
+}
+
+export function useUploadBlogCover() {
+  return useMutation({
+    mutationFn: (file: File) =>
+      adminApi.upload<{ url: string }>("/api/admin/blogs/upload-cover", file),
+  });
+}
+
+/** Slug musaitlik kontrolu (debounce ile cagrilir). */
+export function checkBlogSlug(slug: string, excludeId?: string): Promise<BlogSlugCheck> {
+  return adminApi.get<BlogSlugCheck>(`/api/admin/blogs/check-slug${toQuery({ slug, excludeId })}`);
 }

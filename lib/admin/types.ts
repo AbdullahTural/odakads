@@ -187,6 +187,75 @@ export interface AboutSettingItem {
 }
 export type AboutSettingInput = Omit<AboutSettingItem, "id">;
 
+// --- Blog ---
+
+export type BlogStatus = "draft" | "published" | "archived";
+
+export interface BlogAdminListItem {
+  id: string;
+  title: string;
+  slug: string;
+  category: string;
+  author: string;
+  status: BlogStatus;
+  coverImageUrl: string;
+  publishedAt: string | null;
+  updatedDate: string;
+}
+
+export interface BlogAdminDetail {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  coverImageUrl: string;
+  coverImageAlt: string;
+  category: string;
+  tags: string[];
+  author: string;
+  readingMinutes: number;
+  status: BlogStatus;
+  publishedAt: string | null;
+  archivedAt: string | null;
+  createdDate: string;
+  updatedDate: string;
+  seoTitle: string;
+  seoDescription: string;
+  canonicalUrl: string;
+  ogTitle: string;
+  ogDescription: string;
+  ogImageUrl: string;
+  noIndex: boolean;
+  previousSlugs: string[];
+}
+
+export interface BlogInput {
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  coverImageUrl: string;
+  coverImageAlt: string;
+  category: string;
+  tags: string[];
+  author: string;
+  status: BlogStatus;
+  publishedAt: string | null;
+  seoTitle: string;
+  seoDescription: string;
+  canonicalUrl: string;
+  ogTitle: string;
+  ogDescription: string;
+  ogImageUrl: string;
+  noIndex: boolean;
+}
+
+export interface BlogSlugCheck {
+  slug: string;
+  available: boolean;
+}
+
 export interface LeadChartPoint {
   date: string;
   count: number;
