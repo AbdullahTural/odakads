@@ -30,6 +30,12 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<ConversionSetting> ConversionSettings => Set<ConversionSetting>();
     public DbSet<AboutSetting> AboutSettings => Set<AboutSetting>();
 
+    // Blog
+    public DbSet<BlogPost> BlogPosts => Set<BlogPost>();
+
+    // Site icerigi (anahtar-deger)
+    public DbSet<ContentBlock> ContentBlocks => Set<ContentBlock>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

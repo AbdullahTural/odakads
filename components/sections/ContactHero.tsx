@@ -1,20 +1,27 @@
+"use client";
+
 import * as React from "react";
 import Image from "next/image";
 import { ClipboardCheck, Target, Zap } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Reveal } from "@/components/ui/reveal";
+import { useSiteContent } from "@/lib/api/hooks";
+import { pickContent } from "@/lib/content/fields";
 
+// Maddeler — ikon sabit, metin admin "Site İçeriği"nden ezilebilir
 const bullets = [
-  { icon: ClipboardCheck, label: "Ücretsiz Hesap Analizi" },
-  { icon: Target, label: "Size Özel Strateji Önerileri" },
-  { icon: Zap, label: "Hızlı Geri Dönüş (24 Saat İçinde)" },
+  { icon: ClipboardCheck, key: "page.contact.bullet1", label: "Ücretsiz Hesap Analizi" },
+  { icon: Target, key: "page.contact.bullet2", label: "Size Özel Strateji Önerileri" },
+  { icon: Zap, key: "page.contact.bullet3", label: "Hızlı Geri Dönüş (24 Saat İçinde)" },
 ];
 
 /**
  * İletişim sayfası hero'su (mockup düzeni): solda metin + maddeler + dekoratif neon görsel,
- * sağda iletişim formu (children olarak verilir). Yeni işlev/veri yok — yalnızca düzen.
+ * sağda iletişim formu (children olarak verilir). Metinler admin "Site İçeriği"nden düzenlenebilir.
  */
 export function ContactHero({ children }: { children: React.ReactNode }) {
+  const { data: c } = useSiteContent();
+  const titleOverride = pickContent(c, "page.contact.title");
+
   return (
     <section className="relative overflow-hidden border-b border-border">
       <div
@@ -33,31 +40,39 @@ export function ContactHero({ children }: { children: React.ReactNode }) {
             <Reveal>
               <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
                 <span className="h-px w-6 bg-primary/70" />
-                İletişime Geçin
+                {pickContent(c, "page.contact.eyebrow", "İletişime Geçin")}
               </span>
             </Reveal>
             <Reveal delay={0.05}>
               <h1 className="mt-5 font-display text-4xl font-bold leading-[1.12] tracking-tight sm:text-5xl lg:text-6xl">
-                Birlikte Büyüyelim.{" "}
-                <span className="text-gradient">Markanızı Zirveye Taşıyalım.</span>
+                {titleOverride ? (
+                  titleOverride
+                ) : (
+                  <>
+                    Birlikte Büyüyelim.{" "}
+                    <span className="text-gradient">Markanızı Zirveye Taşıyalım.</span>
+                  </>
+                )}
               </h1>
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Google Ads uzmanlarımız, reklam hesaplarınızı analiz ederek size özel
-                stratejilerle büyümeniz için hazır. Hedeflerinizi paylaşın, size en
-                uygun çözümü birlikte planlayalım.
+                {pickContent(
+                  c,
+                  "page.contact.subtitle",
+                  "Google Ads uzmanlarımız, reklam hesaplarınızı analiz ederek size özel stratejilerle büyümeniz için hazır. Hedeflerinizi paylaşın, size en uygun çözümü birlikte planlayalım.",
+                )}
               </p>
             </Reveal>
             <Reveal delay={0.15}>
               <ul className="mt-8 space-y-4">
                 {bullets.map((b) => (
-                  <li key={b.label} className="flex items-center gap-3">
+                  <li key={b.key} className="flex items-center gap-3">
                     <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-primary/30 bg-primary/10 text-primary shadow-glow-blue">
                       <b.icon className="h-5 w-5" />
                     </span>
                     <span className="text-sm font-medium text-foreground/90 sm:text-base">
-                      {b.label}
+                      {pickContent(c, b.key, b.label)}
                     </span>
                   </li>
                 ))}

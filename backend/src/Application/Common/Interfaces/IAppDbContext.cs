@@ -30,5 +30,11 @@ public interface IAppDbContext
     DbSet<ConversionSetting> ConversionSettings { get; }
     DbSet<AboutSetting> AboutSettings { get; }
 
+    // Blog
+    DbSet<BlogPost> BlogPosts { get; }
+
+    // Site icerigi (anahtar-deger)
+    DbSet<ContentBlock> ContentBlocks { get; }
+
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

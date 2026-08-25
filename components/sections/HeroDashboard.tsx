@@ -102,8 +102,8 @@ export function HeroDashboard() {
               <AreaChart data={roasData} margin={{ top: 4, right: 4, left: 4, bottom: 0 }}>
                 <defs>
                   <linearGradient id="roasFill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.5} />
-                    <stop offset="100%" stopColor="#3b82f6" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#e8912a" stopOpacity={0.5} />
+                    <stop offset="100%" stopColor="#e8912a" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <YAxis
@@ -120,11 +120,11 @@ export function HeroDashboard() {
                 <Area
                   type="monotone"
                   dataKey="value"
-                  stroke="#60a5fa"
+                  stroke="#f5a742"
                   strokeWidth={2.5}
                   fill="url(#roasFill)"
                   dot={false}
-                  activeDot={{ r: 4, fill: "#60a5fa" }}
+                  activeDot={{ r: 4, fill: "#f5a742" }}
                 />
               </AreaChart>
             </ResponsiveContainer>
@@ -141,8 +141,8 @@ export function HeroDashboard() {
               <BarChart data={convData} margin={{ top: 2, right: 0, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="barFill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#a78bfa" />
-                    <stop offset="100%" stopColor="#7c3aed" />
+                    <stop offset="0%" stopColor="#f6b352" />
+                    <stop offset="100%" stopColor="#e07f1e" />
                   </linearGradient>
                 </defs>
                 <YAxis domain={[0, 40]} hide />

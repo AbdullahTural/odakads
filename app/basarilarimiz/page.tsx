@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/sections/PageHero";
+import { PageHeroDynamic } from "@/components/sections/PageHeroDynamic";
 import { PerformanceOverviewPanel } from "@/components/sections/PerformanceOverviewPanel";
 import { LogoMarquee } from "@/components/sections/LogoMarquee";
 import { ReviewsSlider } from "@/components/sections/ReviewsSlider";
@@ -20,7 +20,8 @@ export const metadata: Metadata = getPageMetadata("success", {
 export default function SuccessPage() {
   return (
     <>
-      <PageHero
+      <PageHeroDynamic
+        contentKey="success"
         eyebrow="Referanslarımız"
         title={
           <>

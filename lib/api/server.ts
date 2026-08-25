@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { siteConfig } from "@/lib/site";
+import type { BlogDetailDto } from "@/lib/api/types";
 
 type SeoBuildOverride = {
   title?: string;
@@ -49,12 +50,56 @@ export function getPageMetadata(
       siteName: siteConfig.name,
       title,
       description,
+      images: [siteConfig.ogImage],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [siteConfig.ogImage],
     },
+  };
+}
+
+/**
+ * Blog yazisi metadata'si (static export, build-time).
+ * SEO alanlari bostaysa gorunur icerikten guvenli varsayilanlar uretilir.
+ */
+export function getBlogPostMetadata(post: BlogDetailDto): Metadata {
+  const title = post.seoTitle?.trim() || post.title;
+  const description = post.seoDescription?.trim() || post.excerpt;
+  const canonical = post.canonicalUrl?.trim() || `/blog/${post.slug}/`;
+  const ogTitle = post.ogTitle?.trim() || title;
+  const ogDescription = post.ogDescription?.trim() || description;
+  const image = post.ogImageUrl?.trim() || post.coverImageUrl?.trim() || siteConfig.ogImage;
+
+  return {
+    title: { absolute: title },
+    description,
+    alternates: { canonical },
+    robots: post.noIndex
+      ? { index: false, follow: false }
+      : { index: true, follow: true },
+    openGraph: {
+      type: "article",
+      locale: siteConfig.locale,
+      url: canonical,
+      siteName: siteConfig.name,
+      title: ogTitle,
+      description: ogDescription,
+      images: image ? [image] : undefined,
+      publishedTime: post.publishedAt ?? undefined,
+      modifiedTime: post.updatedAt || undefined,
+      authors: post.author ? [post.author] : undefined,
+      tags: post.tags,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: ogTitle,
+      description: ogDescription,
+      images: image ? [image] : undefined,
+    },
+    ...(post.tags && post.tags.length ? { keywords: post.tags } : {}),
   };
 }
 
@@ -75,11 +120,13 @@ export const rootMetadata: Metadata = {
     siteName: siteConfig.name,
     title: siteConfig.title,
     description: siteConfig.description,
+    images: [siteConfig.ogImage],
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.title,
     description: siteConfig.description,
+    images: [siteConfig.ogImage],
   },
   robots: { index: true, follow: true },
   alternates: { canonical: "/" },

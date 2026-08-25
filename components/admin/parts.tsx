@@ -29,7 +29,7 @@ export function AddButton({ onClick, label = "Yeni Ekle" }: { onClick: () => voi
   return (
     <button
       onClick={onClick}
-      className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-glow-blue transition-transform hover:-translate-y-0.5"
+      className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-600 px-5 py-2.5 text-sm font-semibold text-white shadow-glow-blue transition-transform hover:-translate-y-0.5"
     >
       <Plus className="h-4 w-4" />
       {label}

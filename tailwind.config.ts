@@ -71,10 +71,10 @@ const config: Config = {
         display: ["var(--font-space-grotesk)", "var(--font-inter)", "sans-serif"],
       },
       boxShadow: {
-        "glow-blue": "0 0 25px -2px rgba(59, 130, 246, 0.45)",
-        "glow-blue-lg": "0 0 60px -5px rgba(59, 130, 246, 0.55)",
-        "glow-purple": "0 0 25px -2px rgba(139, 92, 246, 0.45)",
-        "glow-purple-lg": "0 0 60px -5px rgba(139, 92, 246, 0.55)",
+        "glow-blue": "0 0 25px -2px rgba(232, 145, 42, 0.45)",
+        "glow-blue-lg": "0 0 60px -5px rgba(232, 145, 42, 0.55)",
+        "glow-purple": "0 0 25px -2px rgba(59, 90, 160, 0.42)",
+        "glow-purple-lg": "0 0 60px -5px rgba(59, 90, 160, 0.5)",
         glass: "0 8px 32px 0 rgba(2, 6, 23, 0.55)",
       },
       backgroundImage: {

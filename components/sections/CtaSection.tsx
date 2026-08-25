@@ -4,11 +4,14 @@ import Link from "next/link";
 import { ArrowRight, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/ui/reveal";
-import { useConversion, useResolvedSiteSettings } from "@/lib/api/hooks";
+import { useConversion, useResolvedSiteSettings, useSiteContent } from "@/lib/api/hooks";
+import { pickContent } from "@/lib/content/fields";
 
 export function CtaSection() {
   const { data } = useConversion();
   const { data: contact } = useResolvedSiteSettings();
+  const { data: c } = useSiteContent();
+  const ctaTitle = pickContent(c, "cta.title");
 
   // Birincil CTA: Calendly aktifse Calendly, degilse ayardaki URL ya da /iletisim.
   const primaryText = data?.primaryCtaText?.trim() || "Ücretsiz Analiz Al";
@@ -33,13 +36,21 @@ export function CtaSection() {
             />
             <div className="relative mx-auto max-w-2xl">
               <h2 className="font-display text-3xl font-bold leading-[1.2] tracking-tight sm:text-4xl lg:text-5xl">
-                Reklam bütçenizi{" "}
-                <span className="text-gradient">birlikte</span> analiz edelim
+                {ctaTitle ? (
+                  ctaTitle
+                ) : (
+                  <>
+                    Reklam bütçenizi{" "}
+                    <span className="text-gradient">birlikte</span> analiz edelim
+                  </>
+                )}
               </h2>
               <p className="mt-5 text-lg text-muted-foreground">
-                Ücretsiz hesap analizi ile mevcut kampanyalarınızdaki
-                verimlilik noktalarını ve bütçe koruma stratejilerini birlikte
-                inceleyelim.
+                {pickContent(
+                  c,
+                  "cta.subtitle",
+                  "Ücretsiz hesap analizi ile mevcut kampanyalarınızdaki verimlilik noktalarını ve bütçe koruma stratejilerini birlikte inceleyelim.",
+                )}
               </p>
               <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <Button asChild size="lg">

@@ -55,7 +55,7 @@ export function AboutStory() {
             />
             <div className="relative space-y-6">
               <div className="flex items-center gap-3">
-                <span className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 text-white">
+                <span className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-orange-500 to-amber-600 text-white">
                   <Sparkles className="h-6 w-6" />
                 </span>
                 <div>

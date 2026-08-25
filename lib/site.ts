@@ -11,6 +11,8 @@ export const siteConfig = {
     "Google Ads ile büyümenizi hızlandırıyoruz. Performans odaklı arama, görüntülü, YouTube ve Performance Max kampanyalarıyla ROAS'ınızı yükseltin.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://odakadsreklam.com",
   locale: "tr_TR",
+  /** Varsayilan sosyal paylasim gorseli (og:image) — 1200x630 marka gorseli. */
+  ogImage: "/images/og-default.png",
   keywords: [
     "Google Ads ajansı",
     "Google Ads yönetimi",
@@ -22,18 +24,21 @@ export const siteConfig = {
     "Google Partner",
   ],
   contact: {
-    phone: "+90 (212) 000 00 00",
-    phoneHref: "tel:+902120000000",
+    phone: "+90 530 426 36 89",
+    phoneHref: "tel:+905304263689",
     email: "info@odakadsreklam.com",
     emailHref: "mailto:info@odakadsreklam.com",
-    address: "Maslak Mah. Büyükdere Cad. No:255, Sarıyer / İstanbul",
+    address: "Mimar Sinan Mah., Üsküdar / İstanbul",
+    addressLocality: "Üsküdar",
+    addressRegion: "İstanbul",
+    addressCountry: "TR",
     workingHours: "Pazartesi – Cuma, 09:00 – 18:00",
     mapEmbed:
-      "https://www.google.com/maps?q=Maslak%20Istanbul&output=embed",
+      "https://www.google.com/maps?q=%C3%9Csk%C3%BCdar%20%C4%B0stanbul&output=embed",
   },
   social: {
     linkedin: "https://www.linkedin.com/",
-    instagram: "https://www.instagram.com/",
+    instagram: "https://www.instagram.com/odakads/",
     x: "https://x.com/",
     youtube: "https://www.youtube.com/",
   },
@@ -49,5 +54,6 @@ export const navItems: NavItem[] = [
   { label: "Hakkımızda", href: "/hakkimizda" },
   { label: "Hizmetler", href: "/hizmetler" },
   { label: "Referanslarımız", href: "/basarilarimiz" },
+  { label: "Bloglar", href: "/blog" },
   { label: "İletişim", href: "/iletisim" },
 ];

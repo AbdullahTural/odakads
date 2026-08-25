@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { Instagram, Linkedin, Mail, MapPin, Phone, Youtube } from "lucide-react";
 import { navItems, siteConfig } from "@/lib/site";
-import { useResolvedSiteSettings } from "@/lib/api/hooks";
+import { useResolvedSiteSettings, useSiteContent } from "@/lib/api/hooks";
+import { pickContent } from "@/lib/content/fields";
 import { Logo } from "@/components/layout/Logo";
 
 const services = [
@@ -17,6 +18,7 @@ const services = [
 export function Footer() {
   const year = new Date().getFullYear();
   const { data: contact } = useResolvedSiteSettings();
+  const { data: c } = useSiteContent();
 
   return (
     <footer className="relative mt-24 border-t border-border bg-background/80">
@@ -25,8 +27,11 @@ export function Footer() {
           <div className="space-y-5">
             <Logo />
             <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
-              Performans odaklı Google Ads yönetimiyle markanızın büyümesini
-              hızlandırıyoruz. Veriye dayalı, şeffaf kampanya yönetimi.
+              {pickContent(
+                c,
+                "footer.description",
+                "Performans odaklı Google Ads yönetimiyle markanızın büyümesini hızlandırıyoruz. Veriye dayalı, şeffaf kampanya yönetimi.",
+              )}
             </p>
             <div className="flex items-center gap-3">
               <SocialLink href={contact.linkedin} label="LinkedIn">
