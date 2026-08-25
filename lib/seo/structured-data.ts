@@ -3,7 +3,7 @@
  * Yalnizca DOGRULANMIS isletme bilgileriyle uretilir; sosyal profiller
  * dogrulanmadigi icin `sameAs` bilincli olarak eklenmez.
  */
-import { siteConfig } from "@/lib/site";
+import { siteConfig, navItems } from "@/lib/site";
 import type { BlogDetailDto } from "@/lib/api/types";
 
 const SITE = siteConfig.url.replace(/\/$/, "");
@@ -40,6 +40,38 @@ export function organizationLd() {
     areaServed: ["Üsküdar", "İstanbul", "Türkiye"],
     // Yalnizca dogrulanmis profiller (Instagram: @odakads)
     sameAs: ["https://www.instagram.com/odakads/"],
+  };
+}
+
+/**
+ * Site geneli WebSite düğümü. Google'ın siteyi tek bir varlık olarak tanımasına yardımcı olur.
+ * (Site içi arama sayfası olmadığı için SearchAction bilinçli olarak eklenmez.)
+ */
+export function webSiteLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${SITE}/#website`,
+    url: `${SITE}/`,
+    name: siteConfig.name,
+    inLanguage: "tr-TR",
+    publisher: { "@id": `${SITE}/#organization` },
+  };
+}
+
+/**
+ * Ana menüyü (Ana Sayfa + alt sayfalar) Google'a tanıtan SiteNavigationElement grafiği.
+ * Sitelink'leri Google otomatik seçer; bu, hangi sayfaların ana navigasyon olduğunu netleştirir.
+ */
+export function siteNavigationLd() {
+  return {
+    "@context": "https://schema.org",
+    "@graph": navItems.map((item, i) => ({
+      "@type": "SiteNavigationElement",
+      position: i + 1,
+      name: item.label,
+      url: absoluteUrl(item.href),
+    })),
   };
 }
 

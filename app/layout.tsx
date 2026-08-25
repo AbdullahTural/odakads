@@ -6,7 +6,7 @@ import { Providers } from "./providers";
 import { AppShell } from "@/components/layout/AppShell";
 import { AnalyticsScripts } from "@/components/analytics/AnalyticsScripts";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { organizationLd } from "@/lib/seo/structured-data";
+import { organizationLd, webSiteLd, siteNavigationLd } from "@/lib/seo/structured-data";
 
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
@@ -47,7 +47,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className="min-h-screen">
-        <JsonLd data={organizationLd()} />
+        <JsonLd data={[organizationLd(), webSiteLd(), siteNavigationLd()]} />
         <Providers>
           <AppShell>{children}</AppShell>
           <AnalyticsScripts />
