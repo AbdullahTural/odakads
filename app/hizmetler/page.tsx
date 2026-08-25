@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/sections/PageHero";
+import { PageHeroDynamic } from "@/components/sections/PageHeroDynamic";
 import { ServicesGrid } from "@/components/sections/ServicesGrid";
 import { ProcessSection } from "@/components/sections/ProcessSection";
 import { CtaSection } from "@/components/sections/CtaSection";
@@ -15,7 +15,8 @@ export const metadata: Metadata = getPageMetadata("services", {
 export default function ServicesPage() {
   return (
     <>
-      <PageHero
+      <PageHeroDynamic
+        contentKey="services"
         eyebrow="Hizmetlerimiz"
         title={
           <>

@@ -143,6 +143,15 @@ export function useConversion() {
   });
 }
 
+/** Site icerigi (anahtar-deger). Bilesenler pickContent(data, key, fallback) ile tuketir. */
+export function useSiteContent() {
+  return useQuery({
+    queryKey: ["site-content"],
+    queryFn: endpoints.getContent,
+    staleTime: PUBLIC_STALE_TIME,
+  });
+}
+
 export function useContactMutation() {
   return useMutation({
     mutationFn: (payload: ContactRequestDto) =>

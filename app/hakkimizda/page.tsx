@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/sections/PageHero";
+import { PageHeroDynamic } from "@/components/sections/PageHeroDynamic";
 import { AboutStory } from "@/components/sections/AboutStory";
 import {
   MissionVision,
@@ -19,7 +19,8 @@ export const metadata: Metadata = getPageMetadata("about", {
 export default function AboutPage() {
   return (
     <>
-      <PageHero
+      <PageHeroDynamic
+        contentKey="about"
         eyebrow="Hakkımızda"
         title={
           <>

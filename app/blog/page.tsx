@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PageHero } from "@/components/sections/PageHero";
+import { PageHeroDynamic } from "@/components/sections/PageHeroDynamic";
 import { BlogList } from "@/components/blog/BlogList";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Button } from "@/components/ui/button";
@@ -31,7 +31,8 @@ export default function BlogIndexPage() {
         ]}
       />
 
-      <PageHero
+      <PageHeroDynamic
+        contentKey="blog"
         eyebrow="Blog"
         title={
           <>

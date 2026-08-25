@@ -13,6 +13,8 @@ import {
   Wallet,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useSiteContent } from "@/lib/api/hooks";
+import { pickContent } from "@/lib/content/fields";
 
 // Recharts agir oldugu icin dashboard lazy yuklenir
 const HeroDashboard = dynamic(
@@ -25,11 +27,12 @@ const HeroDashboard = dynamic(
   },
 );
 
+// Güven rozetleri — ikon sabit, metin admin "Site İçeriği"nden ezilebilir
 const badges = [
-  { icon: BadgeCheck, label: "Google Ads Uzmanlığı" },
-  { icon: Users, label: "Birebir İlgilenilen Sınırlı Müşteri" },
-  { icon: Wallet, label: "Şeffaf Bütçe Yönetimi" },
-  { icon: TrendingUp, label: "Veriye Dayalı Optimizasyon" },
+  { icon: BadgeCheck, key: "hero.badge1", label: "Google Ads Uzmanlığı" },
+  { icon: Users, key: "hero.badge2", label: "Birebir İlgilenilen Sınırlı Müşteri" },
+  { icon: Wallet, key: "hero.badge3", label: "Şeffaf Bütçe Yönetimi" },
+  { icon: TrendingUp, key: "hero.badge4", label: "Veriye Dayalı Optimizasyon" },
 ];
 
 const container = {
@@ -42,6 +45,20 @@ const item = {
 };
 
 export function Hero() {
+  const { data: c } = useSiteContent();
+
+  const badge = pickContent(c, "hero.badge", "Performans Odaklı Google Ads Ajansı");
+  const titleOverride = pickContent(c, "hero.title");
+  const subtitle = pickContent(
+    c,
+    "hero.subtitle",
+    "İşletmenize uygun anahtar kelimelerle reklamlarınızı doğru hedef kitleye ulaştırıyoruz. Manuel kampanya yönetimiyle sürdürülebilir büyüme sağlıyoruz.",
+  );
+  const primaryText = pickContent(c, "hero.primaryText", "Ücretsiz Analiz Al");
+  const primaryUrl = pickContent(c, "hero.primaryUrl", "/iletisim");
+  const secondaryText = pickContent(c, "hero.secondaryText", "Başarı Hikayeleri");
+  const secondaryUrl = pickContent(c, "hero.secondaryUrl", "/basarilarimiz");
+
   return (
     <section className="relative overflow-hidden">
       {/* arka plan dekor */}
@@ -60,7 +77,7 @@ export function Hero() {
           <motion.div variants={item}>
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 text-xs font-medium text-muted-foreground">
               <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
-              Performans Odaklı Google Ads Ajansı
+              {badge}
             </span>
           </motion.div>
 
@@ -68,17 +85,21 @@ export function Hero() {
             variants={item}
             className="mt-6 font-display text-4xl font-bold leading-[1.18] tracking-tight sm:text-5xl lg:text-6xl"
           >
-            Google Ads ile{" "}
-            <span className="text-gradient">Büyümenizi</span> Hızlandırıyoruz.
+            {titleOverride ? (
+              titleOverride
+            ) : (
+              <>
+                Google Ads ile{" "}
+                <span className="text-gradient">Büyümenizi</span> Hızlandırıyoruz.
+              </>
+            )}
           </motion.h1>
 
           <motion.p
             variants={item}
             className="mt-6 text-lg leading-relaxed text-muted-foreground"
           >
-            İşletmenize uygun anahtar kelimelerle reklamlarınızı doğru hedef
-            kitleye ulaştırıyoruz. Manuel kampanya yönetimiyle sürdürülebilir
-            büyüme sağlıyoruz.
+            {subtitle}
           </motion.p>
 
           <motion.div
@@ -86,15 +107,15 @@ export function Hero() {
             className="mt-8 flex flex-col gap-4 sm:flex-row"
           >
             <Button asChild size="lg">
-              <Link href="/iletisim">
-                Ücretsiz Analiz Al
+              <Link href={primaryUrl}>
+                {primaryText}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <Link href="/basarilarimiz">
+              <Link href={secondaryUrl}>
                 <PlayCircle className="h-4 w-4" />
-                Başarı Hikayeleri
+                {secondaryText}
               </Link>
             </Button>
           </motion.div>
@@ -106,11 +127,13 @@ export function Hero() {
           >
             {badges.map((b) => (
               <li
-                key={b.label}
+                key={b.key}
                 className="flex items-center gap-2.5 rounded-xl border border-border bg-surface px-3.5 py-3 text-sm"
               >
                 <b.icon className="h-4 w-4 shrink-0 text-primary" />
-                <span className="font-medium text-foreground/90">{b.label}</span>
+                <span className="font-medium text-foreground/90">
+                  {pickContent(c, b.key, b.label)}
+                </span>
               </li>
             ))}
           </motion.ul>

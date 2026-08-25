@@ -236,3 +236,6 @@ export interface ContactResponseDto {
   success: boolean;
   message: string;
 }
+
+/** Site icerigi (anahtar-deger) — GET /api/content. Admin'den duzenlenebilen duz metinler. */
+export type SiteContent = Record<string, string>;

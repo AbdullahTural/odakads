@@ -32,6 +32,7 @@ import type {
   ConversionSettingDto,
   ReviewDto,
   ServiceDto,
+  SiteContent,
   SiteSettingsDto,
   StatDto,
   TestimonialDto,
@@ -107,4 +108,7 @@ export const endpoints = {
 
   getAnalytics: (): Promise<AnalyticsSettingDto | null> =>
     USE_MOCK ? mock(null) : apiClient.get<AnalyticsSettingDto>("/api/analytics-settings"),
+
+  getContent: (): Promise<SiteContent> =>
+    USE_MOCK ? mock<SiteContent>({}) : apiClient.get<SiteContent>("/api/content"),
 };

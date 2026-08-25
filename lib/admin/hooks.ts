@@ -285,3 +285,24 @@ export function useUploadBlogCover() {
 export function checkBlogSlug(slug: string, excludeId?: string): Promise<BlogSlugCheck> {
   return adminApi.get<BlogSlugCheck>(`/api/admin/blogs/check-slug${toQuery({ slug, excludeId })}`);
 }
+
+// --- Site icerigi (anahtar-deger) ---
+
+export function useContentAdmin() {
+  return useQuery({
+    queryKey: ["admin-content"],
+    queryFn: () => adminApi.get<Record<string, string>>("/api/admin/content"),
+  });
+}
+
+export function useUpdateContent() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (items: Record<string, string>) =>
+      adminApi.put<Record<string, string>>("/api/admin/content", { items }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["admin-content"] });
+      qc.invalidateQueries({ queryKey: ["site-content"] });
+    },
+  });
+}

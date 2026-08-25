@@ -14,6 +14,7 @@ import {
   Mail,
   MessageSquareQuote,
   Newspaper,
+  PencilRuler,
   Rocket,
   Search,
   Settings,
@@ -28,6 +29,7 @@ import { useAuth } from "@/lib/admin/auth-context";
 
 const links = [
   { href: "/admin/dashboard", label: "Genel Bakış", icon: LayoutDashboard },
+  { href: "/admin/content", label: "Site İçeriği", icon: PencilRuler },
   { href: "/admin/services", label: "Hizmetler", icon: Briefcase },
   { href: "/admin/testimonials", label: "Referanslar", icon: MessageSquareQuote },
   { href: "/admin/reviews", label: "Armut Yorumları", icon: Star },
