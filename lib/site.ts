@@ -11,8 +11,8 @@ export const siteConfig = {
     "Google Ads ile büyümenizi hızlandırıyoruz. Performans odaklı arama, görüntülü, YouTube ve Performance Max kampanyalarıyla ROAS'ınızı yükseltin.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://odakadsreklam.com",
   locale: "tr_TR",
-  /** Varsayilan sosyal paylasim gorseli (og:image). Oneri: 1200x630 marka gorseli ekleyin. */
-  ogImage: "/images/page-heroes/services-hero.webp",
+  /** Varsayilan sosyal paylasim gorseli (og:image) — 1200x630 marka gorseli. */
+  ogImage: "/images/og-default.png",
   keywords: [
     "Google Ads ajansı",
     "Google Ads yönetimi",

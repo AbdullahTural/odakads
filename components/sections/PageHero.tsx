@@ -109,8 +109,8 @@ function SideImage({
   isPurple: boolean;
 }) {
   const dropShadow = isPurple
-    ? "drop-shadow-[0_0_65px_rgba(139,92,246,0.40)]"
-    : "drop-shadow-[0_0_60px_rgba(59,130,246,0.40)]";
+    ? "drop-shadow-[0_0_65px_rgba(232,145,42,0.42)]"
+    : "drop-shadow-[0_0_60px_rgba(232,145,42,0.38)]";
 
   return (
     <div className="relative flex w-full items-center justify-center">
@@ -124,7 +124,7 @@ function SideImage({
           aria-hidden
           className={cn(
             "pointer-events-none absolute inset-0 -z-10 rounded-full blur-3xl",
-            isPurple ? "bg-purple-500/20" : "bg-blue-500/20",
+            isPurple ? "bg-orange-500/20" : "bg-amber-500/20",
           )}
         />
         <Image

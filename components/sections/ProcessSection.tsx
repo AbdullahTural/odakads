@@ -50,7 +50,7 @@ export function ProcessSection() {
                       <span className="absolute right-5 top-5 font-display text-5xl font-bold text-white/5 transition-colors group-hover:text-primary/10">
                         {String(step.step).padStart(2, "0")}
                       </span>
-                      <span className="relative grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 text-primary">
+                      <span className="relative grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-primary/25 to-secondary/25 text-primary">
                         <Icon className="h-6 w-6" />
                       </span>
                       <h3 className="relative mt-5 font-display text-lg font-semibold">

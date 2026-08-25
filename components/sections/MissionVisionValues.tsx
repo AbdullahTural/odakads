@@ -76,7 +76,7 @@ export function ValuesSection() {
                 return (
                   <RevealItem key={v.id}>
                     <GlowCard glow={i % 2 === 0 ? "blue" : "purple"} className="h-full">
-                      <span className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 text-primary">
+                      <span className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-primary/25 to-secondary/25 text-primary">
                         <Icon className="h-6 w-6" />
                       </span>
                       <h3 className="mt-5 font-display text-lg font-semibold">

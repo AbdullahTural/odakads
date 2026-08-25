@@ -14,16 +14,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 14%;
 
-    --primary: 226 71% 48%; /* indigo — açık zeminde kontrast */
+    --primary: 28 90% 48%; /* Odak turuncu */
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 258 70% 52%;
+    --secondary: 222 47% 30%; /* Odak lacivert */
     --secondary-foreground: 210 40% 98%;
 
     --muted: 214 28% 92%;
     --muted-foreground: 215 20% 38%;
 
-    --accent: 226 71% 48%;
+    --accent: 28 90% 48%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 72% 51%;
@@ -31,7 +31,7 @@
 
     --border: 214 24% 86%;
     --input: 214 24% 90%;
-    --ring: 226 71% 48%;
+    --ring: 28 90% 48%;
 
     --radius: 0.875rem;
 
@@ -42,8 +42,8 @@
     --hairline-opacity: 0.1;
 
     --body-gradient: linear-gradient(180deg, #eef2f8 0%, #f3f5f8 45%, #e8eef6 100%);
-    --body-glow-1: rgba(59, 130, 246, 0.1);
-    --body-glow-2: rgba(139, 92, 246, 0.06);
+    --body-glow-1: rgba(232, 145, 42, 0.1);
+    --body-glow-2: rgba(30, 44, 80, 0.06);
     --scrollbar-track: #e8eef6;
 
     color-scheme: light;
@@ -61,24 +61,24 @@
     --popover: 210 52% 8%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 226 71% 56%; /* indigo — koyu zeminde okunur */
-    --primary-foreground: 210 40% 98%;
+    --primary: 32 95% 56%; /* Odak turuncu (koyu zeminde) */
+    --primary-foreground: 222 47% 12%;
 
-    --secondary: 258 90% 66%;
+    --secondary: 220 45% 52%; /* lacivert-mavi (koyu zeminde) */
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217 33% 17%;
     --muted-foreground: 215 22% 72%;
 
-    --accent: 226 71% 56%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 32 95% 56%;
+    --accent-foreground: 222 47% 12%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 217 33% 20%;
     --input: 217 33% 18%;
-    --ring: 226 71% 56%;
+    --ring: 32 95% 56%;
 
     --surface: 0 0% 100%;
     --surface-opacity: 0.04;
@@ -86,8 +86,8 @@
     --hairline-opacity: 0.1;
 
     --body-gradient: linear-gradient(180deg, #0a1224 0%, #040e1a 50%, #020810 100%);
-    --body-glow-1: rgba(59, 130, 246, 0.14);
-    --body-glow-2: rgba(139, 92, 246, 0.1);
+    --body-glow-1: rgba(232, 145, 42, 0.13);
+    --body-glow-2: rgba(59, 90, 160, 0.1);
     --scrollbar-track: #040e1a;
 
     color-scheme: dark;
@@ -151,29 +151,29 @@
   }
 
   .glow-blue {
-    box-shadow: 0 0 25px -2px rgba(59, 130, 246, 0.45);
+    box-shadow: 0 0 25px -2px rgba(232, 145, 42, 0.45);
   }
 
   .glow-purple {
-    box-shadow: 0 0 25px -2px rgba(139, 92, 246, 0.45);
+    box-shadow: 0 0 25px -2px rgba(59, 90, 160, 0.42);
   }
 
   .text-gradient {
-    @apply bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-amber-500 via-orange-500 to-orange-600 bg-clip-text text-transparent;
   }
 
   .dark .text-gradient,
   .force-dark .text-gradient {
-    @apply from-blue-400 via-indigo-400 to-purple-400;
+    @apply from-amber-300 via-orange-400 to-orange-500;
   }
 
   .text-gradient-blue {
-    @apply bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent;
   }
 
   .dark .text-gradient-blue,
   .force-dark .text-gradient-blue {
-    @apply from-sky-300 to-blue-500;
+    @apply from-amber-300 to-orange-500;
   }
 
   .section-pad {
@@ -195,7 +195,7 @@
     inset: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.6), rgba(139, 92, 246, 0.6), transparent 60%);
+    background: linear-gradient(135deg, rgba(232, 145, 42, 0.6), rgba(59, 90, 160, 0.55), transparent 60%);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
