@@ -38,7 +38,7 @@ export const siteConfig = {
   },
   social: {
     linkedin: "https://www.linkedin.com/",
-    instagram: "https://www.instagram.com/",
+    instagram: "https://www.instagram.com/odakads/",
     x: "https://x.com/",
     youtube: "https://www.youtube.com/",
   },

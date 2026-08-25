@@ -38,6 +38,8 @@ export function organizationLd() {
       addressCountry: siteConfig.contact.addressCountry,
     },
     areaServed: ["Üsküdar", "İstanbul", "Türkiye"],
+    // Yalnizca dogrulanmis profiller (Instagram: @odakads)
+    sameAs: ["https://www.instagram.com/odakads/"],
   };
 }
 
