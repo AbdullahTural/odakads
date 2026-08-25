@@ -33,6 +33,9 @@ public class AppDbContext : DbContext, IAppDbContext
     // Blog
     public DbSet<BlogPost> BlogPosts => Set<BlogPost>();
 
+    // Site icerigi (anahtar-deger)
+    public DbSet<ContentBlock> ContentBlocks => Set<ContentBlock>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

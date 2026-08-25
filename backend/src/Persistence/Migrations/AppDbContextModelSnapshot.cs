@@ -423,6 +423,30 @@ namespace HasanHabibSeyda.Persistence.Migrations
                     b.ToTable("ContactRequests");
                 });
 
+            modelBuilder.Entity("HasanHabibSeyda.Domain.Entities.ContentBlock", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Key")
+                        .IsUnique();
+
+                    b.ToTable("ContentBlocks");
+                });
+
             modelBuilder.Entity("HasanHabibSeyda.Domain.Entities.ConversionSetting", b =>
                 {
                     b.Property<Guid>("Id")
