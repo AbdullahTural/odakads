@@ -72,6 +72,17 @@ export const CONTENT_GROUPS: ContentGroup[] = [
       { key: "page.blog.description", label: "Blog — açıklama", multiline: true },
     ],
   },
+  {
+    title: "İletişim Sayfası (Hero)",
+    fields: [
+      { key: "page.contact.eyebrow", label: "Üst etiket" },
+      { key: "page.contact.title", label: "Başlık", multiline: true },
+      { key: "page.contact.subtitle", label: "Alt metin", multiline: true },
+      { key: "page.contact.bullet1", label: "Madde 1" },
+      { key: "page.contact.bullet2", label: "Madde 2" },
+      { key: "page.contact.bullet3", label: "Madde 3" },
+    ],
+  },
 ];
 
 export const CONTENT_KEYS: string[] = CONTENT_GROUPS.flatMap((g) => g.fields.map((f) => f.key));

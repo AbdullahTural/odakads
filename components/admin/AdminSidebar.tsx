@@ -14,6 +14,7 @@ import {
   Mail,
   MessageSquareQuote,
   Newspaper,
+  Palette,
   PencilRuler,
   Rocket,
   Search,
@@ -23,27 +24,52 @@ import {
   X,
   KeyRound,
   Star,
+  type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/admin/auth-context";
 
-const links = [
-  { href: "/admin/dashboard", label: "Genel Bakış", icon: LayoutDashboard },
-  { href: "/admin/content", label: "Site İçeriği", icon: PencilRuler },
-  { href: "/admin/services", label: "Hizmetler", icon: Briefcase },
-  { href: "/admin/testimonials", label: "Referanslar", icon: MessageSquareQuote },
-  { href: "/admin/reviews", label: "Armut Yorumları", icon: Star },
-  { href: "/admin/reference-companies", label: "Referans Firmalar", icon: Building2 },
-  { href: "/admin/video-testimonials", label: "Video Referanslar", icon: Video },
-  { href: "/admin/case-studies", label: "Vaka Çalışmaları", icon: FileBarChart },
-  { href: "/admin/blogs", label: "Bloglar", icon: Newspaper },
-  { href: "/admin/contact-requests", label: "İletişim Talepleri", icon: Mail },
-  { href: "/admin/seo-settings", label: "SEO Yönetimi", icon: Search },
-  { href: "/admin/analytics-settings", label: "Analytics / Takip", icon: BarChart3 },
-  { href: "/admin/conversion-settings", label: "Dönüşüm Ayarları", icon: Rocket },
-  { href: "/admin/about-settings", label: "Hakkımızda Ayarları", icon: Info },
-  { href: "/admin/site-settings", label: "Site Ayarları", icon: Settings },
-  { href: "/admin/change-password", label: "Şifre Değiştir", icon: KeyRound },
+type NavLink = { href: string; label: string; icon: LucideIcon };
+type NavGroup = { title?: string; items: NavLink[] };
+
+const groups: NavGroup[] = [
+  {
+    items: [{ href: "/admin/dashboard", label: "Genel Bakış", icon: LayoutDashboard }],
+  },
+  {
+    title: "İçerik & Sayfalar",
+    items: [
+      { href: "/admin/content", label: "Site İçeriği", icon: PencilRuler },
+      { href: "/admin/blogs", label: "Bloglar", icon: Newspaper },
+      { href: "/admin/services", label: "Hizmetler", icon: Briefcase },
+      { href: "/admin/testimonials", label: "Referanslar", icon: MessageSquareQuote },
+      { href: "/admin/reviews", label: "Armut Yorumları", icon: Star },
+      { href: "/admin/reference-companies", label: "Referans Firmalar", icon: Building2 },
+      { href: "/admin/video-testimonials", label: "Video Referanslar", icon: Video },
+      { href: "/admin/case-studies", label: "Vaka Çalışmaları", icon: FileBarChart },
+    ],
+  },
+  {
+    title: "Görünüm",
+    items: [{ href: "/admin/appearance", label: "Görünüm (Tema)", icon: Palette }],
+  },
+  {
+    title: "SEO & Takip",
+    items: [
+      { href: "/admin/seo-settings", label: "SEO Yönetimi", icon: Search },
+      { href: "/admin/analytics-settings", label: "Analytics / Takip", icon: BarChart3 },
+      { href: "/admin/conversion-settings", label: "Dönüşüm Ayarları", icon: Rocket },
+    ],
+  },
+  {
+    title: "Mesajlar & Ayarlar",
+    items: [
+      { href: "/admin/contact-requests", label: "İletişim Talepleri", icon: Mail },
+      { href: "/admin/about-settings", label: "Hakkımızda Ayarları", icon: Info },
+      { href: "/admin/site-settings", label: "Site Ayarları", icon: Settings },
+      { href: "/admin/change-password", label: "Şifre Değiştir", icon: KeyRound },
+    ],
+  },
 ];
 
 export function AdminSidebar() {
@@ -78,26 +104,35 @@ export function AdminSidebar() {
             <p className="text-xs text-muted-foreground">Yönetim Paneli</p>
           </div>
 
-          <nav className="flex-1 space-y-1 overflow-y-auto p-3">
-            {links.map((l) => {
-              const active = pathname.startsWith(l.href);
-              return (
-                <Link
-                  key={l.href}
-                  href={l.href}
-                  prefetch={false}
-                  className={cn(
-                    "flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-colors",
-                    active
-                      ? "bg-primary/15 text-primary"
-                      : "text-muted-foreground hover:bg-white/5 hover:text-foreground",
-                  )}
-                >
-                  <l.icon className="h-4 w-4 shrink-0" />
-                  {l.label}
-                </Link>
-              );
-            })}
+          <nav className="flex-1 space-y-4 overflow-y-auto p-3">
+            {groups.map((group, gi) => (
+              <div key={group.title ?? `g${gi}`} className="space-y-1">
+                {group.title && (
+                  <p className="px-3.5 pb-1 pt-1 text-[0.7rem] font-semibold uppercase tracking-wider text-muted-foreground/70">
+                    {group.title}
+                  </p>
+                )}
+                {group.items.map((l) => {
+                  const active = pathname.startsWith(l.href);
+                  return (
+                    <Link
+                      key={l.href}
+                      href={l.href}
+                      prefetch={false}
+                      className={cn(
+                        "flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-colors",
+                        active
+                          ? "bg-primary/15 text-primary"
+                          : "text-muted-foreground hover:bg-white/5 hover:text-foreground",
+                      )}
+                    >
+                      <l.icon className="h-4 w-4 shrink-0" />
+                      {l.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            ))}
           </nav>
 
           <div className="border-t border-white/10 p-4">

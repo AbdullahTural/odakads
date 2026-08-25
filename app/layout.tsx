@@ -5,6 +5,7 @@ import { rootMetadata } from "@/lib/api/server";
 import { Providers } from "./providers";
 import { AppShell } from "@/components/layout/AppShell";
 import { AnalyticsScripts } from "@/components/analytics/AnalyticsScripts";
+import { ThemeVars } from "@/components/theme/ThemeVars";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { organizationLd, webSiteLd, siteNavigationLd } from "@/lib/seo/structured-data";
 
@@ -49,6 +50,7 @@ export default function RootLayout({
       <body className="min-h-screen">
         <JsonLd data={[organizationLd(), webSiteLd(), siteNavigationLd()]} />
         <Providers>
+          <ThemeVars />
           <AppShell>{children}</AppShell>
           <AnalyticsScripts />
         </Providers>
