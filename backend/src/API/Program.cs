@@ -37,6 +37,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 builder.Services.AddScoped<LogoUploadService>();
 builder.Services.AddScoped<MediaUploadService>();
+builder.Services.AddSingleton<SiteRebuildService>();
 
 // --- Controllers (System.Text.Json varsayilan camelCase) ---
 builder.Services.AddControllers();

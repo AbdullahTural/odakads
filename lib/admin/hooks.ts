@@ -13,6 +13,7 @@ import type {
   BlogAdminListItem,
   BlogInput,
   BlogSlugCheck,
+  RebuildState,
   AnalyticsSettingInput,
   AnalyticsSettingItem,
   CaseStudyInput,
@@ -284,6 +285,26 @@ export function useUploadBlogCover() {
 /** Slug musaitlik kontrolu (debounce ile cagrilir). */
 export function checkBlogSlug(slug: string, excludeId?: string): Promise<BlogSlugCheck> {
   return adminApi.get<BlogSlugCheck>(`/api/admin/blogs/check-slug${toQuery({ slug, excludeId })}`);
+}
+
+// --- Site yeniden yayinlama ("Siteyi Yayina Al") ---
+
+/** Yayinlama durumu — yalnizca 'running' iken periyodik sorgular. */
+export function useRebuildState() {
+  return useQuery({
+    queryKey: ["admin-rebuild"],
+    queryFn: () => adminApi.get<RebuildState>("/api/admin/site/rebuild"),
+    refetchInterval: (q) => (q.state.data?.status === "running" ? 4000 : false),
+    retry: false,
+  });
+}
+
+export function useTriggerRebuild() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: () => adminApi.post<RebuildState>("/api/admin/site/rebuild", {}),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["admin-rebuild"] }),
+  });
 }
 
 // --- Site icerigi (anahtar-deger) ---

@@ -21,6 +21,13 @@
     "AutoMigrate": true,
     "SeedOnStartup": false
   },
+  "Rebuild": {
+    "Enabled": false,
+    "FileName": "npm",
+    "Arguments": "run build:deploy",
+    "WorkingDirectory": "REPO_KOK_YOLU (or. /var/www/odakads)",
+    "TimeoutSeconds": 900
+  },
   "AllowedHosts": "odakadsreklam.com;www.odakadsreklam.com",
   "Serilog": {
     "MinimumLevel": {
