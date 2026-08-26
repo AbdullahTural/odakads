@@ -10,6 +10,13 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Baslangic blog icerigi (DbSeeder gomulu kaynak olarak okur) -->
+    <EmbeddedResource Include="Seed\blog-seed.json">
+      <LogicalName>blog-seed.json</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

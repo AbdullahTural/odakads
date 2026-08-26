@@ -59,6 +59,16 @@ try {
     }
   }
 
+  // API basariyla ama 0 yayin dondurduyse mevcut (commit'li) icerigi EZME.
+  // Boylece DB henuz seed edilmeden yapilan bir build, hazir bloglari silmez.
+  if (posts.length === 0) {
+    console.warn(
+      "[fetch:blog] API 0 yayindaki yazi dondurdu — mevcut lib/blog-build-data.json korunuyor (ezilmedi).",
+    );
+    ensureFallbackFile();
+    process.exit(0);
+  }
+
   writeFileSync(outPath, `${JSON.stringify(posts, null, 2)}\n`, "utf8");
   console.log(`[fetch:blog] ${posts.length} yayindaki yazi yazildi → lib/blog-build-data.json (${base})`);
 } catch (err) {
