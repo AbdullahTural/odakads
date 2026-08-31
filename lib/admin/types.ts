@@ -256,6 +256,14 @@ export interface BlogSlugCheck {
   available: boolean;
 }
 
+// --- Site yeniden yayınlama ("Siteyi Yayına Al") ---
+export interface RebuildState {
+  status: "idle" | "running" | "success" | "failed";
+  startedAt: string | null;
+  finishedAt: string | null;
+  message: string;
+}
+
 export interface LeadChartPoint {
   date: string;
   count: number;

@@ -19,6 +19,7 @@ import {
 } from "@/components/admin/parts";
 import { ConfirmDialog } from "@/components/admin/Modal";
 import { Pagination } from "@/components/admin/Pagination";
+import { PublishSiteButton } from "@/components/admin/PublishSiteButton";
 import { cn } from "@/lib/utils";
 import { formatBlogDate } from "@/lib/blog/format";
 
@@ -90,6 +91,8 @@ export default function BlogsAdminPage() {
           </Link>
         }
       />
+
+      <PublishSiteButton />
 
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <SearchInput value={search} onChange={setSearch} placeholder="Başlık, slug, kategori ara..." />

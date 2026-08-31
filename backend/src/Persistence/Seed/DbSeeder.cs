@@ -1,3 +1,4 @@
+using System.Text.Json;
 using HasanHabibSeyda.Application.Common.Interfaces;
 using HasanHabibSeyda.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,9 @@ public static class DbSeeder
         await SeedAnalyticsSettingAsync(db, ct);
         await SeedConversionSettingAsync(db, ct);
         await SeedAboutSettingAsync(db, ct);
+
+        // Blog — baslangic icerigi (gomulu blog-seed.json)
+        await SeedBlogPostsAsync(db, ct);
 
         await db.SaveChangesAsync(ct);
     }
@@ -310,5 +314,102 @@ public static class DbSeeder
             Role = "Admin",
             IsActive = true,
         });
+    }
+
+    /// <summary>
+    /// Baslangic blog yazilarini gomulu 'blog-seed.json' kaynagindan ekler (yalnizca tablo bosken).
+    /// Kaynak okunamaz/ayristirilamazsa baslangici KESMEZ (bloglar site build verisinden yine gelir).
+    /// </summary>
+    private static async Task SeedBlogPostsAsync(AppDbContext db, CancellationToken ct)
+    {
+        if (await db.BlogPosts.AnyAsync(ct)) return;
+
+        try
+        {
+            var asm = typeof(DbSeeder).Assembly;
+            var resourceName = System.Array.Find(
+                asm.GetManifestResourceNames(),
+                n => n.EndsWith("blog-seed.json", StringComparison.OrdinalIgnoreCase));
+            if (resourceName is null) return;
+
+            await using var stream = asm.GetManifestResourceStream(resourceName);
+            if (stream is null) return;
+
+            var items = await JsonSerializer.DeserializeAsync<List<BlogSeedItem>>(
+                stream,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true },
+                ct);
+            if (items is null || items.Count == 0) return;
+
+            foreach (var it in items)
+            {
+                if (string.IsNullOrWhiteSpace(it.Slug)) continue;
+                var published = ParseUtc(it.PublishedAt) ?? DateTime.UtcNow;
+
+                db.BlogPosts.Add(new BlogPost
+                {
+                    Id = Guid.TryParse(it.Id, out var g) ? g : Guid.NewGuid(),
+                    Title = it.Title ?? string.Empty,
+                    Slug = it.Slug!,
+                    Excerpt = it.Excerpt ?? string.Empty,
+                    Content = it.Content ?? string.Empty,
+                    CoverImageUrl = it.CoverImageUrl ?? string.Empty,
+                    CoverImageAlt = it.CoverImageAlt ?? string.Empty,
+                    Category = it.Category ?? string.Empty,
+                    Tags = it.Tags ?? new List<string>(),
+                    Author = it.Author ?? string.Empty,
+                    ReadingMinutes = it.ReadingMinutes,
+                    Status = BlogStatuses.Published,
+                    PublishedAt = published,
+                    CreatedDate = published,
+                    UpdatedDate = ParseUtc(it.UpdatedAt) ?? published,
+                    SeoTitle = it.SeoTitle ?? string.Empty,
+                    SeoDescription = it.SeoDescription ?? string.Empty,
+                    CanonicalUrl = it.CanonicalUrl ?? string.Empty,
+                    OgTitle = it.OgTitle ?? string.Empty,
+                    OgDescription = it.OgDescription ?? string.Empty,
+                    OgImageUrl = it.OgImageUrl ?? string.Empty,
+                    NoIndex = it.NoIndex,
+                    PreviousSlugs = new List<string>(),
+                });
+            }
+        }
+        catch
+        {
+            // Seed dosyasi okunamaz/ayristirilamazsa yut — baslangici kesme.
+        }
+    }
+
+    private static DateTime? ParseUtc(string? s) =>
+        DateTime.TryParse(
+            s,
+            System.Globalization.CultureInfo.InvariantCulture,
+            System.Globalization.DateTimeStyles.AdjustToUniversal | System.Globalization.DateTimeStyles.AssumeUniversal,
+            out var d)
+            ? d
+            : null;
+
+    private sealed class BlogSeedItem
+    {
+        public string? Id { get; set; }
+        public string? Title { get; set; }
+        public string? Slug { get; set; }
+        public string? Excerpt { get; set; }
+        public string? Content { get; set; }
+        public string? CoverImageUrl { get; set; }
+        public string? CoverImageAlt { get; set; }
+        public string? Category { get; set; }
+        public List<string>? Tags { get; set; }
+        public string? Author { get; set; }
+        public int ReadingMinutes { get; set; }
+        public string? PublishedAt { get; set; }
+        public string? UpdatedAt { get; set; }
+        public string? SeoTitle { get; set; }
+        public string? SeoDescription { get; set; }
+        public string? CanonicalUrl { get; set; }
+        public string? OgTitle { get; set; }
+        public string? OgDescription { get; set; }
+        public string? OgImageUrl { get; set; }
+        public bool NoIndex { get; set; }
     }
 }
