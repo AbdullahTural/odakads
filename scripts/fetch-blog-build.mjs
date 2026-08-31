@@ -8,7 +8,7 @@
  *
  * API kapali veya bos ise: mevcut lib/blog-build-data.json korunur, yoksa bos dizi yazilir.
  */
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -66,6 +66,22 @@ try {
       "[fetch:blog] API 0 yayindaki yazi dondurdu — mevcut lib/blog-build-data.json korunuyor (ezilmedi).",
     );
     ensureFallbackFile();
+    process.exit(0);
+  }
+
+  // Kurate icerik korumasi: API, commit'li dosyadaki yazi sayisindan DAHA AZ dondurduyse ezme.
+  // (Deploy sirasinda backend henuz yeni bloglari seed etmemis olabilir; hazir icerik silinmesin.)
+  let committedCount = 0;
+  try {
+    if (existsSync(outPath)) committedCount = JSON.parse(readFileSync(outPath, "utf8")).length || 0;
+  } catch {
+    // bozuk/okunamaz dosya — yok say
+  }
+  if (committedCount > 0 && posts.length < committedCount) {
+    console.warn(
+      `[fetch:blog] API ${posts.length} yazi dondurdu ama mevcut dosyada ${committedCount} var — ` +
+        "kurate icerik korunuyor (ezilmedi).",
+    );
     process.exit(0);
   }
 
