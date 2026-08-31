@@ -322,8 +322,9 @@ public static class DbSeeder
     /// </summary>
     private static async Task SeedBlogPostsAsync(AppDbContext db, CancellationToken ct)
     {
-        if (await db.BlogPosts.AnyAsync(ct)) return;
-
+        // Not: "hepsini atla" yerine EKSIK slug'lari ekleriz. Boylece DB doluyken bile,
+        // blog-seed.json'a eklenen yeni kurate bloglar bir sonraki baslangicta gelir;
+        // mevcut yazilar (ayni slug) tekrar eklenmez / bozulmaz.
         try
         {
             var asm = typeof(DbSeeder).Assembly;
@@ -341,9 +342,14 @@ public static class DbSeeder
                 ct);
             if (items is null || items.Count == 0) return;
 
+            var existingSlugs = new HashSet<string>(
+                await db.BlogPosts.Select(p => p.Slug).ToListAsync(ct),
+                StringComparer.OrdinalIgnoreCase);
+
             foreach (var it in items)
             {
-                if (string.IsNullOrWhiteSpace(it.Slug)) continue;
+                if (string.IsNullOrWhiteSpace(it.Slug) || existingSlugs.Contains(it.Slug!)) continue;
+                existingSlugs.Add(it.Slug!);
                 var published = ParseUtc(it.PublishedAt) ?? DateTime.UtcNow;
 
                 db.BlogPosts.Add(new BlogPost
